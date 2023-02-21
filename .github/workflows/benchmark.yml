@@ -17,6 +17,7 @@ jobs:
           submodules: recursive
       - uses: docker/setup-buildx-action@v2
       - uses: docker/setup-qemu-action@v2
+      - uses: docker/build-push-action@v3
         with:
           context: ./upstream
           platforms: linux/amd64,linux/arm64
