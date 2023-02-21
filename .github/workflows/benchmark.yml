@@ -1,0 +1,37 @@
+name: Benchmark
+on:
+  push: {}
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-with-docker:
+    name: Build with Docker
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: docker/setup-buildx-action@v2
+      - uses: docker/setup-qemu-action@v2
+        with:
+          context: ./upstream
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-with-depot:
+    name: Build with Depot
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: depot/setup-action@v1
+      - uses: depot/build-push-action@v1
+        with:
+          context: ./upstream
+          platforms: linux/amd64,linux/arm64
