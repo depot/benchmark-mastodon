@@ -11,6 +11,7 @@ jobs:
   build-with-docker:
     name: Build with Docker
     runs-on: ubuntu-latest
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@v3
         with:
